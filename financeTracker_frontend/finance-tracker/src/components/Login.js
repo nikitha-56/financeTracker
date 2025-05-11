@@ -22,7 +22,7 @@ const Login = () => {
   };
 
   return (
-    <div style={styles.container}>
+     <div style={{ ...styles.container, background: 'linear-gradient(to bottom right, #a6c9f0, #c1a3e3, #f2b1d7)' }}>
       <h2 style={styles.heading}>Login</h2>
       <form onSubmit={handleLogin} style={styles.form}>
         <input
