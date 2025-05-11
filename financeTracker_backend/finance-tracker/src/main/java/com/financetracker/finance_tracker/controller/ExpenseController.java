@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.financetracker.finance_tracker.model.Expense;
 import com.financetracker.finance_tracker.service.ExpenseService;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 @RestController
 @RequestMapping("/api/expenses")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ExpenseController {
     @Autowired
     private ExpenseService expenseService;
@@ -33,6 +36,12 @@ public class ExpenseController {
     @GetMapping
     public List<Expense> getAllExpenses() {
         return expenseService.getAllExpenses();
+    }
+
+    @GetMapping("/total")
+    public ResponseEntity<Double> getTotalExpenses() {
+        Double total = expenseService.getTotalExpenses();
+        return ResponseEntity.ok(total);
     }
 
     @PutMapping("/{id}")

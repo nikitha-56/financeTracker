@@ -1,0 +1,14 @@
+.hero-container {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Full screen height */
+  /* Or whatever your path is */
+  background-size: cover; /* Ensures it covers entire container */
+  background-position: center center; /* Center both horizontally and vertically */
+  background-repeat: no-repeat;
+  padding-top: 20px;
+}
+
+.hero-image{
+    width: 100%;
+}

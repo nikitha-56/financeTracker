@@ -1,5 +1,8 @@
 package com.financetracker.finance_tracker.model;
 
+import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 @Entity
@@ -7,11 +10,16 @@ public class Expense {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private double amount;
     private String category;
-    private String date;
+
+    @JsonFormat(pattern = "yyyy-MM-dd") // Tells Jackson how to format the LocalDate
+    private LocalDate date;
+
     private String notes;
 
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -36,11 +44,12 @@ public class Expense {
         this.category = category;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    // Change the setter to accept a LocalDate instead of String
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

@@ -7,7 +7,12 @@ import org.springframework.stereotype.Repository;
 
 import com.financetracker.finance_tracker.model.Expense;
 
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
 @Repository
 public interface ExpenseRepository extends JpaRepository<Expense, Long> {
 
+    @Query("SELECT COALESCE(SUM(e.amount), 0) FROM Expense e")
+    Double getTotalExpenses();
 }
