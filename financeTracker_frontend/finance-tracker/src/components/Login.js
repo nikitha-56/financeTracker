@@ -15,14 +15,14 @@ const Login = () => {
         password,
       });
       console.log(response.data); // "Login successful"
-      navigate("/add");
+      navigate("/dashboard");
     } catch (error) {
       alert("Invalid credentials");
     }
   };
 
   return (
-     <div style={{ ...styles.container, background: 'linear-gradient(to bottom right, #a6c9f0, #c1a3e3, #f2b1d7)' }}>
+    <div>
       <h2 style={styles.heading}>Login</h2>
       <form onSubmit={handleLogin} style={styles.form}>
         <input
@@ -65,7 +65,7 @@ const styles = {
     alignItems: "center",
     justifyContent: "center",
     height: "100vh",
-    backgroundColor:" #f5f7fa",
+    // backgroundColor removed here
   },
   heading: {
     fontSize: "2rem",
@@ -114,3 +114,71 @@ const styles = {
 };
 
 export default Login;
+
+
+// import React, { useState } from "react";
+
+// const styles = {
+//   heading: {
+//     fontSize: "2rem",
+//     marginBottom: "20px",
+//     color: "#333",
+//     textAlign: "center",
+//   },
+//   form: {
+//     display: "flex",
+//     flexDirection: "column",
+//     width: "300px",
+//     padding: "20px",
+//     backgroundColor: "#fff",
+//     borderRadius: "8px",
+//     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+//   },
+//   input: {
+//     padding: "10px",
+//     marginBottom: "15px",
+//     borderRadius: "5px",
+//     border: "1px solid #ddd",
+//     fontSize: "1rem",
+//   },
+//   button: {
+//     padding: "10px",
+//     backgroundColor: "#4CAF50",
+//     color: "white",
+//     border: "none",
+//     borderRadius: "5px",
+//     fontSize: "1rem",
+//     cursor: "pointer",
+//     transition: "background-color 0.3s",
+//   },
+//   signupText: {
+//     marginTop: "15px",
+//     fontSize: "1rem",
+//     color: "#555",
+//     textAlign: "center",
+//   },
+//   signupLink: {
+//     color: "blue",
+//     cursor: "pointer",
+//     textDecoration: "underline",
+//   },
+// };
+
+// function Login() {
+//   // Your login logic here
+//   return (
+//     <>
+//       <h2 style={styles.heading}>Login</h2>
+//       <form style={styles.form}>
+//         <input style={styles.input} type="email" placeholder="Email" />
+//         <input style={styles.input} type="password" placeholder="Password" />
+//         <button style={styles.button} type="submit">Login</button>
+//       </form>
+//       <p style={styles.signupText}>
+//         Don't have an account? <span style={styles.signupLink}>Signup</span>
+//       </p>
+//     </>
+//   );
+// }
+
+// export default Login;

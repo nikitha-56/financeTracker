@@ -3,23 +3,46 @@ package com.financetracker.finance_tracker.model;
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.*;
+
 
 @Entity
 public class Expense {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private double amount;
+
+    @Column(nullable = false)
     private String category;
 
-    @JsonFormat(pattern = "yyyy-MM-dd") // Tells Jackson how to format the LocalDate
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Column(nullable = false)
     private LocalDate date;
 
     private String notes;
 
-    // Getters and Setters
+     @ManyToOne
+    @JoinColumn(name = "user_id") // This will be the foreign key column in the Expense table
+    private User user;
+    // No-args constructor (required by JPA)
+    public Expense() {}
+
+    // All-args constructor for convenience
+    public Expense(Long id, double amount, String category, LocalDate date, String notes) {
+        this.id = id;
+        this.amount = amount;
+        this.category = category;
+        this.date = date;
+        this.notes = notes;
+    }
+
+    // Getters and setters
+
     public Long getId() {
         return id;
     }
@@ -48,7 +71,6 @@ public class Expense {
         return date;
     }
 
-    // Change the setter to accept a LocalDate instead of String
     public void setDate(LocalDate date) {
         this.date = date;
     }

@@ -33,6 +33,17 @@ public class ExpenseController {
         return ResponseEntity.ok("Expense added successfully");
     }
 
+    @GetMapping("/user/{userId}")
+public List<Expense> getExpensesByUserId(@PathVariable Long userId) {
+    return expenseService.getExpensesByUserId(userId);
+}
+
+@GetMapping("/user/{userId}/total")
+public ResponseEntity<Double> getTotalExpensesByUser(@PathVariable Long userId) {
+    Double total = expenseService.getTotalExpensesByUser(userId);
+    return ResponseEntity.ok(total);
+}
+
     @GetMapping
     public List<Expense> getAllExpenses() {
         return expenseService.getAllExpenses();

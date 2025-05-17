@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom'; // Import useNavigate
-import { getExpenseById, updateExpense } from '../api'; // Add API calls to get and update expense
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 const ExpenseEdit = () => {
   const [expense, setExpense] = useState({
@@ -9,15 +9,14 @@ const ExpenseEdit = () => {
     date: '',
     notes: ''
   });
-  const [message, setMessage] = useState('');
-  const navigate = useNavigate(); // Use useNavigate instead of useHistory
-  const { id } = useParams(); // Get the ID from the URL
+
+  const navigate = useNavigate();
+  const { id } = useParams();
 
   useEffect(() => {
-    // Fetch expense details by ID
     const fetchExpense = async () => {
       try {
-        const response = await getExpenseById(id); // API call to get expense details by ID
+        const response = await axios.get(`http://localhost:8080/api/expenses/${id}`);
         setExpense({
           amount: response.data.amount,
           category: response.data.category,
@@ -25,24 +24,11 @@ const ExpenseEdit = () => {
           notes: response.data.notes
         });
       } catch (error) {
-        setMessage('Failed to load expense details');
+        alert("Failed to load expense details");
       }
     };
-
     fetchExpense();
   }, [id]);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await updateExpense(id, expense); // Send PUT request to update expense
-      alert('Expense updated successfully');
-      navigate('/'); // Redirect to the home page after successful update
-    } catch (err) {
-      console.error(err);
-      alert('Failed to update expense');
-    }
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -52,54 +38,121 @@ const ExpenseEdit = () => {
     });
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.put(`http://localhost:8080/api/expenses/${id}`, expense);
+      alert("Expense updated successfully");
+      navigate("/");
+    } catch (err) {
+      console.error(err);
+      alert("Failed to update expense");
+    }
+  };
+
   return (
-    <div>
-      <h2>Edit Expense</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Amount:</label>
-          <input
-            type="number"
-            name="amount"
-            value={expense.amount}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Category:</label>
-          <input
-            type="text"
-            name="category"
-            value={expense.category}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Date:</label>
-          <input
-            type="date"
-            name="date"
-            value={expense.date}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Notes:</label>
-          <input
-            type="text"
-            name="notes"
-            value={expense.notes}
-            onChange={handleChange}
-          />
-        </div>
-        <button type="submit">Update Expense</button>
-      </form>
-      {message && <p>{message}</p>}
+    <div style={styles.container}>
+      <div style={styles.card}>
+        <h2 style={styles.heading}>Edit Expense</h2>
+        <form onSubmit={handleSubmit} style={styles.form}>
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Amount:</label>
+            <input
+              type="number"
+              name="amount"
+              value={expense.amount}
+              onChange={handleChange}
+              style={styles.input}
+              required
+            />
+          </div>
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Category:</label>
+            <input
+              type="text"
+              name="category"
+              value={expense.category}
+              onChange={handleChange}
+              style={styles.input}
+              required
+            />
+          </div>
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Date:</label>
+            <input
+              type="date"
+              name="date"
+              value={expense.date}
+              onChange={handleChange}
+              style={styles.input}
+              required
+            />
+          </div>
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Notes:</label>
+            <input
+              type="text"
+              name="notes"
+              value={expense.notes}
+              onChange={handleChange}
+              style={styles.input}
+            />
+          </div>
+          <button type="submit" style={styles.button}>Update Expense</button>
+        </form>
+      </div>
     </div>
   );
+};
+
+const styles = {
+  container: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100vh",
+    backgroundColor: "#f9f9f9",
+  },
+  card: {
+    width: "400px",
+    padding: "20px",
+    borderRadius: "8px",
+    backgroundColor: "#fff",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+  },
+  heading: {
+    textAlign: "center",
+    marginBottom: "20px",
+    color: "#333",
+  },
+  form: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  inputGroup: {
+    marginBottom: "15px",
+  },
+  label: {
+    marginBottom: "5px",
+    fontSize: "14px",
+    color: "#555",
+  },
+  input: {
+    width: "100%",
+    padding: "10px",
+    borderRadius: "5px",
+    border: "1px solid #ddd",
+  },
+  button: {
+    padding: "10px",
+    backgroundColor: "#4CAF50",
+    color: "white",
+    border: "none",
+    borderRadius: "5px",
+    fontSize: "1rem",
+    cursor: "pointer",
+    width: "100%",
+  },
 };
 
 export default ExpenseEdit;

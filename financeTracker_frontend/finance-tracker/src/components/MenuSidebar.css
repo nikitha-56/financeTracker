@@ -1,0 +1,19 @@
+/* Completely remove outline and focus for the button */
+.menu-button:focus,
+.menu-button:active {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+}
+
+/* For Firefox */
+.menu-button::-moz-focus-inner {
+  border: 0;
+}
+
+/* For Mobile Safari */
+.menu-button:focus-visible {
+  outline: none;
+  box-shadow: none;
+}

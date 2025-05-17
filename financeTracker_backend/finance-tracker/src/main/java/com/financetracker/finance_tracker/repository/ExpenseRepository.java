@@ -13,6 +13,11 @@ import org.springframework.data.repository.query.Param;
 @Repository
 public interface ExpenseRepository extends JpaRepository<Expense, Long> {
 
+     List<Expense> findByUserId(Long userId);
+
     @Query("SELECT COALESCE(SUM(e.amount), 0) FROM Expense e")
     Double getTotalExpenses();
+
+     @Query("SELECT COALESCE(SUM(e.amount), 0) FROM Expense e WHERE e.user.id = :userId")
+    Double getTotalExpensesByUser(Long userId);
 }

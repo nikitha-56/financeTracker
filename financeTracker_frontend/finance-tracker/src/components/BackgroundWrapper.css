@@ -1,0 +1,8 @@
+/* BackgroundWrapper.css */
+.background-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to right bottom, rgb(247, 202, 201), rgb(146, 168, 209));
+}
