@@ -21,12 +21,12 @@ const SidebarNavigation = ({ menuOpen, setMenuOpen }) => {
       <div className={`sidebar ${menuOpen ? "open" : ""}`}>
         <header>My App</header>
         <ul>
+          <li onClick={() => handleNavigation("/ExpenseList")}>Expense List</li>
           <li onClick={() => handleNavigation("/Dashboard")}>Dashboard</li>
           <li onClick={() => handleNavigation("/add")}>Add Expense</li>
-          <li onClick={() => handleNavigation("/edit")}>Edit Expense</li>
+          {/* Removed Edit Expense from sidebar */}
           <li onClick={() => handleNavigation("/Login")}>Login</li>
           <li onClick={() => handleNavigation("/charts")}>Charts</li>
-           <li onClick={() => handleNavigation("/ExpenseList")}>ExpenseList</li>
         </ul>
       </div>
 

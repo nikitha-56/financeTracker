@@ -19,7 +19,7 @@ function AppWrapper() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   // Routes on which to show the menu button/sidebar
-  const showMenu = ["/dashboard", "/add", "/charts"].some(path => location.pathname.startsWith(path))
+  const showMenu = ["/dashboard", "/add", "/charts", "/"].some(path => location.pathname.startsWith(path))
     || location.pathname.startsWith("/edit/");
 
   useEffect(() => {

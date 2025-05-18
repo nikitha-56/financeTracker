@@ -1,3 +1,5 @@
+
+// export default ExpenseEdit;
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -9,6 +11,8 @@ const ExpenseEdit = () => {
     date: '',
     notes: ''
   });
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -37,116 +41,117 @@ const ExpenseEdit = () => {
     e.preventDefault();
     try {
       await axios.put(`http://localhost:8080/api/expenses/${id}`, expense);
-      alert("Expense updated successfully");
-      navigate("/");
+      setMessage("Expense updated successfully");
+      setError('');
+      setTimeout(() => {
+        navigate("/");
+      }, 1500);
     } catch (err) {
       console.error(err);
-      alert("Failed to update expense");
+      setError("Failed to update expense");
+      setMessage('');
     }
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
-        <h2 style={styles.heading}>Notes</h2>
-        <form onSubmit={handleSubmit} style={styles.form}>
-          <div style={styles.inputGroup}>
-            <label style={styles.label}>Amount:</label>
-            <input
-              type="number"
-              name="amount"
-              value={expense.amount}
-              onChange={handleChange}
-              style={styles.input}
-              required
-            />
-          </div>
-          <div style={styles.inputGroup}>
-            <label style={styles.label}>Category:</label>
-            <input
-              type="text"
-              name="category"
-              value={expense.category}
-              onChange={handleChange}
-              style={styles.input}
-              required
-            />
-          </div>
-          <div style={styles.inputGroup}>
-            <label style={styles.label}>Date:</label>
-            <input
-              type="date"
-              name="date"
-              value={expense.date}
-              onChange={handleChange}
-              style={styles.input}
-              required
-            />
-          </div>
-          <div style={styles.inputGroup}>
-            <label style={styles.label}>Notes:</label>
-            <input
-              type="text"
-              name="notes"
-              value={expense.notes}
-              onChange={handleChange}
-              style={styles.input}
-            />
-          </div>
-          <button type="submit" style={styles.button}>Update Expense</button>
-        </form>
+    <form onSubmit={handleSubmit} style={styles.form}>
+      <h3 style={{ marginBottom: "20px" }}>Edit Expense</h3>
+      <div style={styles.formGroup}>
+        <label style={styles.label}>Amount:</label>
+        <input
+          type="number"
+          name="amount"
+          value={expense.amount}
+          onChange={handleChange}
+          style={styles.input}
+          required
+        />
       </div>
-    </div>
+      <div style={styles.formGroup}>
+        <label style={styles.label}>Category:</label>
+        <input
+          type="text"
+          name="category"
+          value={expense.category}
+          onChange={handleChange}
+          style={styles.input}
+          required
+        />
+      </div>
+      <div style={styles.formGroup}>
+        <label style={styles.label}>Date:</label>
+        <input
+          type="date"
+          name="date"
+          value={expense.date}
+          onChange={handleChange}
+          style={styles.input}
+          required
+        />
+      </div>
+      <div style={styles.formGroup}>
+        <label style={styles.label}>Notes:</label>
+        <input
+          type="text"
+          name="notes"
+          value={expense.notes}
+          onChange={handleChange}
+          style={styles.input}
+        />
+      </div>
+      <button type="submit" style={styles.button}>Update Expense</button>
+      {message && <p style={styles.message}>{message}</p>}
+      {error && <p style={{ ...styles.message, color: "red" }}>{error}</p>}
+    </form>
   );
 };
 
 const styles = {
-  container: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100vh",
-    backgroundColor: "#f9f9f9",
-  },
-  card: {
-    width: "400px",
-    padding: "20px",
-    borderRadius: "8px",
-    backgroundColor: "#fff",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-  },
-  heading: {
-    textAlign: "center",
-    marginBottom: "20px",
-    color: "#333",
-  },
   form: {
     display: "flex",
     flexDirection: "column",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    padding: "50px 70px 50px 50px",
+    borderRadius: "8px",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+    maxWidth: "900px",
+    margin: "auto",
   },
-  inputGroup: {
+  formGroup: {
     marginBottom: "15px",
+    width: "100%",
   },
   label: {
+    fontSize: "1rem",
     marginBottom: "5px",
-    fontSize: "14px",
-    color: "#555",
+    color: "#333",
   },
   input: {
-    width: "100%",
     padding: "10px",
+    fontSize: "1rem",
     borderRadius: "5px",
     border: "1px solid #ddd",
+    width: "100%",
   },
   button: {
-    padding: "10px",
+    padding: "12px 20px",
     backgroundColor: "#4CAF50",
     color: "white",
     border: "none",
     borderRadius: "5px",
     fontSize: "1rem",
     cursor: "pointer",
+    transition: "background-color 0.3s",
     width: "100%",
+  },
+  buttonHover: {
+    backgroundColor: "#45a049",
+  },
+  message: {
+    marginTop: "15px",
+    fontSize: "1rem",
+    color: "#28a745",
   },
 };
 

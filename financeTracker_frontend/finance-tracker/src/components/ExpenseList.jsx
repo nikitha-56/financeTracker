@@ -24,7 +24,9 @@ const ExpenseList = () => {
   }, []);
 
   const handleEdit = (id) => {
-    navigate(`/edit-expense/${id}`);
+    if (id) {
+      navigate(`/edit/${id}`);
+    }
   };
 
   const handleDelete = async (id) => {
@@ -34,6 +36,10 @@ const ExpenseList = () => {
     } catch (err) {
       setError("Failed to delete expense");
     }
+  };
+
+  const formatAmount = (amount) => {
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
   };
 
   if (loading) {
@@ -51,8 +57,8 @@ const ExpenseList = () => {
         <thead>
           <tr>
             <th>S.No</th>
-            <th>Title</th>
-            <th>Expense</th>
+            <th>Notes</th>
+            <th>Amount</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -60,8 +66,8 @@ const ExpenseList = () => {
           {expenses.map((expense, index) => (
             <tr key={expense.id}>
               <td>{index + 1}</td>
-              <td>{expense.title}</td>
-              <td>${expense.amount}</td>
+              <td>{expense.notes}</td>
+              <td>{formatAmount(expense.amount)}</td>
               <td>
                 <button className="edit-button" onClick={() => handleEdit(expense.id)}>Edit</button>
                 <button className="delete-button" onClick={() => handleDelete(expense.id)}>Delete</button>

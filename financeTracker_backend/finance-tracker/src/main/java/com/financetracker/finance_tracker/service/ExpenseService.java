@@ -31,6 +31,11 @@ public class ExpenseService {
     public Double getTotalExpensesByUser(Long userId) {
         return expenseRepository.getTotalExpensesByUser(userId);
     }
+public Expense getExpenseById(Long id) {
+    return expenseRepository.findById(id).orElse(null);
+}
+
+
 
 
     public Expense updateExpense(Long id, Expense expenseDetails) {

@@ -32,6 +32,16 @@ public class ExpenseController {
         expenseService.addExpense(expense);
         return ResponseEntity.ok("Expense added successfully");
     }
+    @GetMapping("/{id}")
+public ResponseEntity<Expense> getExpenseById(@PathVariable Long id) {
+    Expense expense = expenseService.getExpenseById(id);
+    if (expense != null) {
+        return ResponseEntity.ok(expense);
+    } else {
+        return ResponseEntity.notFound().build();
+    }
+}
+
 
     @GetMapping("/user/{userId}")
 public List<Expense> getExpensesByUserId(@PathVariable Long userId) {
