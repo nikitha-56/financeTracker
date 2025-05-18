@@ -13,16 +13,12 @@ const ExpenseEdit = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
+  // Fetch Expense Details
   useEffect(() => {
     const fetchExpense = async () => {
       try {
         const response = await axios.get(`http://localhost:8080/api/expenses/${id}`);
-        setExpense({
-          amount: response.data.amount,
-          category: response.data.category,
-          date: response.data.date,
-          notes: response.data.notes
-        });
+        setExpense(response.data);
       } catch (error) {
         alert("Failed to load expense details");
       }
@@ -30,14 +26,13 @@ const ExpenseEdit = () => {
     fetchExpense();
   }, [id]);
 
+  // Handle Input Changes
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setExpense({
-      ...expense,
-      [name]: value
-    });
+    setExpense((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Handle Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -53,7 +48,7 @@ const ExpenseEdit = () => {
   return (
     <div style={styles.container}>
       <div style={styles.card}>
-        <h2 style={styles.heading}>Edit Expense</h2>
+        <h2 style={styles.heading}>Notes</h2>
         <form onSubmit={handleSubmit} style={styles.form}>
           <div style={styles.inputGroup}>
             <label style={styles.label}>Amount:</label>

@@ -25,6 +25,14 @@ public class ExpenseService {
         return expenseRepository.findAll();
     }
 
+    public List<Expense> getExpensesByUserId(Long userId) {
+        return expenseRepository.findByUser_Id(userId);
+    }
+    public Double getTotalExpensesByUser(Long userId) {
+        return expenseRepository.getTotalExpensesByUser(userId);
+    }
+
+
     public Expense updateExpense(Long id, Expense expenseDetails) {
         Expense expense = expenseRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Expense not found with id " + id));

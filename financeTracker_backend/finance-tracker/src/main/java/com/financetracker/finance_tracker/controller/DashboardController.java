@@ -33,4 +33,4 @@ public class DashboardController {
     public List<com.financetracker.finance_tracker.model.Expense> getAllExpenses(@PathVariable Long userId) {
         return dashboardService.getAllExpenses(userId);
     }
-}
+    }

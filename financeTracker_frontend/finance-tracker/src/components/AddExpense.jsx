@@ -29,9 +29,10 @@ const AddExpense = () => {
       setMessage("Failed to add expense");
     }
   };
-
+  
   return (
     <form onSubmit={handleSubmit} style={styles.form}>
+       <h3>Add Expense</h3>
       <div style={styles.formGroup}>
         <label style={styles.label}>Amount:</label>
         <input
@@ -83,10 +84,11 @@ const styles = {
     flexDirection: "column",
     alignItems: "center",
     backgroundColor: "#fff",
-    padding: "20px",
+    // padding: "60px",
+    padding : "50px 70px 50px 50px",
     borderRadius: "8px",
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-    maxWidth: "400px",
+    maxWidth: "900px",
     margin: "auto",
   },
   formGroup: {

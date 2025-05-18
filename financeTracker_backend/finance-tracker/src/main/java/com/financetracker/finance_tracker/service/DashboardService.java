@@ -29,7 +29,7 @@ public class DashboardService {
         }
 
         User user = userOpt.get();
-        List<Expense> expenses = expenseRepository.findByUserId(userId);
+        List<Expense> expenses = expenseRepository.findByUser_Id(userId);
 
         // Calculate total expenses
         double totalExpenses = expenses.stream().mapToDouble(Expense::getAmount).sum();
@@ -49,7 +49,7 @@ public class DashboardService {
 
     // ✅ **3. Get All Expenses for User**
     public List<Expense> getAllExpenses(Long userId) {
-        return expenseRepository.findByUserId(userId);
+        return expenseRepository.findByUser_Id(userId);
     }
 }
 

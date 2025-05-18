@@ -1,47 +1,40 @@
-// MenuSidebar.js
-import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./MenuSidebar.css";
 
-export default function MenuSidebar({ menuOpen, setMenuOpen }) {
-  const toggleMenu = () => setMenuOpen(!menuOpen);
+const SidebarNavigation = ({ menuOpen, setMenuOpen }) => {
+  const navigate = useNavigate();
+
+  const toggleSidebar = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  // Navigation handler
+  const handleNavigation = (path) => {
+    navigate(path);
+    setMenuOpen(false); // Close sidebar after navigation
+  };
 
   return (
-    <div className="dashboard-container">
-      {/* Hamburger button */}
-      <button
-        onClick={toggleMenu}
-        onMouseDown={(e) => e.preventDefault()} // <-- Prevents blue focus
-        aria-label="Toggle menu"
-        className="menu-button"
-      >
-        &#9776;
-      </button>
+    <>
+      <div className={`sidebar-overlay ${menuOpen ? "visible" : ""}`} onClick={toggleSidebar} />
+      
+      <div className={`sidebar ${menuOpen ? "open" : ""}`}>
+        <header>My App</header>
+        <ul>
+          <li onClick={() => handleNavigation("/Dashboard")}>Dashboard</li>
+          <li onClick={() => handleNavigation("/add")}>Add Expense</li>
+          <li onClick={() => handleNavigation("/edit")}>Edit Expense</li>
+          <li onClick={() => handleNavigation("/Login")}>Login</li>
+          <li onClick={() => handleNavigation("/charts")}>Charts</li>
+           <li onClick={() => handleNavigation("/ExpenseList")}>ExpenseList</li>
+        </ul>
+      </div>
 
-      {/* Sidebar */}
-      <aside className={`sidebar ${menuOpen ? "" : "closed"}`}>
-        {menuOpen && (
-          <nav className="nav-links">
-
-            <Link to="/Login" onClick={() => setMenuOpen(false)}>
-              Login
-            </Link>
-            <Link to="/Dashboard" onClick={() => setMenuOpen(false)}>
-             Dashboard
-            </Link>
-            <Link to="/add" onClick={() => setMenuOpen(false)}>
-              Add Expense
-            </Link>
-            <Link to="/edit" onClick={() => setMenuOpen(false)}>
-              Edit Expense
-            </Link>
-            <Link to="/charts" onClick={() => setMenuOpen(false)}>
-              Charts
-            </Link>
-          </nav>
-        )}
-      </aside>
-    </div>
+      <div id="toggle-btn" onClick={toggleSidebar}>
+        {menuOpen ? "✕" : "☰"}
+      </div>
+    </>
   );
-}
+};
 
+export default SidebarNavigation;

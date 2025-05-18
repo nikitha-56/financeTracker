@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import AddExpense from "./components/AddExpense";
-import EditExpense from "./components/EditExpense";
+import EditExpense from "./components/ExpenseEdit";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Home from "./components/Home";
@@ -10,6 +10,9 @@ import Dashboard from "./components/Dashboard";
 import MenuSidebar from "./components/MenuSidebar";  // new menu/sidebar component
 import './App.css';
 import BackgroundWrapper from "./components/BackgroundWrapper";
+import ExpenseList from "./components/ExpenseList";
+import ExpenseEdit from "./components/ExpenseEdit";
+
 
 function AppWrapper() {
   const location = useLocation();
@@ -33,6 +36,8 @@ function AppWrapper() {
           path="/"
           element={localStorage.getItem("user") ? <Navigate to="/home" /> : <Navigate to="/signup" />}
         />
+        <Route path="/" element={<ExpenseList />} />
+          <Route path="/edit/:id" element={<EditExpense />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/dashboard" element={<Dashboard />} />
@@ -40,6 +45,7 @@ function AppWrapper() {
         <Route path="/add" element={<AddExpense />} />
         <Route path="/edit/:id" element={<EditExpense />} />
         <Route path="/charts" element={<ExpenseChart />} />
+         <Route path="/ExpenseList" element={<ExpenseList />} />
       </Routes>
       </BackgroundWrapper>
     </>
